@@ -68,8 +68,6 @@ show tasks;
 alter task tsk_scd_raw resume; --suspend
 show tasks;
 
-![image](https://github.com/pranjals26/Real-Time-Data-Streaming/assets/41803622/f2a1e292-133b-4db5-b2f0-af5650f15c31)
-
 
 7) for the project we create three tables - Stating table, an Actual and historical table
 Used CDC (Change Data Concept) and SDC(Slowly changing data ) 
