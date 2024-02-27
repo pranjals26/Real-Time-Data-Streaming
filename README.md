@@ -75,6 +75,7 @@ Once the dependencies are installed, check the list of running container
 ![Python](https://github.com/pranjals26/Real-Time-Data-Streaming/blob/main/Workflow/Python%20code%20for%20data%20generation.png)
 
 - Apache NiFi Flow: Set up NiFi to List, Fetch, and Upload data to the S3 bucket. NiFi picks up the data created by the Python script. [http://ip_address:2080/nifi/]
+
 ![Apache Nifi](https://github.com/pranjals26/Real-Time-Data-Streaming/blob/main/Workflow/nififlow.png)
 
 - After the Nifi Flow, the S3 bucket is uploaded with datasets. 
