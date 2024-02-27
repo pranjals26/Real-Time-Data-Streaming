@@ -34,17 +34,42 @@ task - Schedule SQL Statement
 
 1) We use EC2 machine and deploy apache nifi on it, we use docker to deploy Apache and Jupyter on Ec2
   - I have used t2.xlarge instance for the project, Created a key pair 
-2) we use a docker image to download all the depencies (Docker image is tri defined template) 
+2) we use a docker image to download all the dependencies (Docker image is tri defined template) 
+    Docker Compose up #download all the dependencies. 
+    docker ps #lists the containers that are running on your host
 
-3)We generate the test data use python library faker.
-4)We create a Nifi flow to List, Fetch and Upload data to S3 bucket, nifi pickup ups the data created by the python code. 
+3)We generate the test data using the Python library Faker.
 
 
-5) We configure the snow pipe, Snowpipe whenever we have file available in s3 bucket, we trigger the snowpipe and trigger the staging area
+4)We create a Nifi flow to List, Fetch and Upload data to S3 bucket, Nifi pickup ups the data created by the python code. 
+
+5) We configure the snow pipe, Snowpipe whenever we have the file in the s3 bucket. The snow pipe  triggers the staging area 
+for snowpipe - go to s3 bucket, Stream data 
+under properties create event notification -> give prefix as streamdata/ -> Enter Arn for SQS queue Snowpipe created successfully. 
+
 Create a Staging table in the snowflake. 
 Stating area is basically storing the data as it is, not changing anything.
 
+once the snowpipe is created, run the python code run, the pipeline will start where dat goes from nifi to s3 and from s3 to the staging table.
+
 6) create a snowflake stream( track changes in the table) and Snowflaketask (automation of SQL queries) 
+
+used merge snowflake command to (Incremental load) if there are no updates and modification we don’t update the dataset 
+
+We created a stored procedure in the snowflake using JavaScript to automate the process of merging data from customer_raw file to customer. 
+
+Further we create task to automate the code in every one minute
+
+create or replace task tsk_scd_raw warehouse = COMPUTE_WH schedule = '1 minute'
+ERROR_ON_NONDETERMINISTIC_MERGE=FALSE
+as
+call pdr_scd_demo();
+show tasks;
+alter task tsk_scd_raw resume; --suspend
+show tasks;
+
+![image](https://github.com/pranjals26/Real-Time-Data-Streaming/assets/41803622/f2a1e292-133b-4db5-b2f0-af5650f15c31)
+
 
 7) for the project we create three tables - Stating table, an Actual and historical table
 Used CDC (Change Data Concept) and SDC(Slowly changing data ) 
