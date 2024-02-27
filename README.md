@@ -1,4 +1,4 @@
-# Real-Time Data Streaming using Apache Nifi, AWS, Snowpipe, Stream & Task
+# Real-Time Data Streaming using Apache Nifi, AWS, Snowpipe
 
 This repository contains the code and configuration for a robust data ingestion and processing pipeline utilizing Apache NiFi, Docker, AWS EC2 and S3 services, and Snowflake. The pipeline is designed to simulate data generation, orchestrate data flows, and enable incremental data loading into Snowflake for analytics purposes.
 
